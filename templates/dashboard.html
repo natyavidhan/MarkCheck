@@ -1,15 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <title>Dashboard</title>
-</head>
-<body>
-    <h1>Welcome, {{ user['name'] }}</h1>
-    <img src="{{ user['picture'] }}" alt="Profile Picture">
-    <p>Email: {{ user['email'] }}</p>
-    <a href="{{ url_for('index') }}">Go to Index</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Welcome, {{ user['name'] }}</h1>
+<img src="{{ user['picture'] }}" alt="User Picture">
+<p>Email: {{ user['email'] }}</p>
+<a href="{{ url_for('auth.logout') }}">Logout</a>
+
+<!-- Button to trigger the modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBoardModal">
+    Add New Board
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="addBoardModal" tabindex="-1" aria-labelledby="addBoardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{{ url_for('boards.create_board') }}">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addBoardModalLabel">Create New Board</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="board_name" class="form-label">Board Name</label>
+                        <input type="text" class="form-control" id="board_name" name="board_name" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Create Board</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
