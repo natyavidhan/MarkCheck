@@ -3,7 +3,7 @@ from flask_pymongo import PyMongo
 from config import Config
 import os
 
-from auth import auth_bp  # Import the blueprint
+from auth import auth_bp  # Import the blueprint and init function
 from boards import boards_bp  # Import the boards blueprint
 
 app = Flask(__name__)
@@ -12,16 +12,17 @@ app.config.from_object(Config)
 # MongoDB setup
 mongo = PyMongo(app)
 
-# Register the auth blueprint
+auth_bp.mongo = mongo
 app.register_blueprint(auth_bp)
 
-# Register the boards blueprint
+boards_bp.mongo = mongo
 app.register_blueprint(boards_bp)
 
 @app.route('/')
 def index():
     if 'user' in session:
-        return render_template('dashboard.html', user=session['user'])
+        user = mongo.db.users.find_one({"email": session['user']})
+        return render_template('dashboard.html', user=user)
     return render_template('index.html')
 
 if __name__ == '__main__':

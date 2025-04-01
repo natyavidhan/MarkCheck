@@ -6,9 +6,6 @@ from config import Config
 
 auth_bp = Blueprint('auth', __name__)
 
-# MongoDB setup
-mongo = PyMongo()
-# Google OAuth setup
 client = WebApplicationClient(Config.GOOGLE_CLIENT_ID)
 
 @auth_bp.route('/login')
@@ -46,9 +43,9 @@ def callback():
     user_info = userinfo_response.json()
 
     # Store user info in MongoDB
-    user = mongo.db.users.find_one({"email": user_info["email"]})
+    user = auth_bp.mongo.db.users.find_one({"email": user_info["email"]})
     if not user:
-        mongo.db.users.insert_one({
+        auth_bp.mongo.db.users.insert_one({
             "email": user_info["email"],
             "name": user_info["name"],
             "picture": user_info["picture"],
