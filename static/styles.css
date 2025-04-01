@@ -5,6 +5,7 @@ body {
     margin: 0;
     padding: 0;
     text-align: center;
+    padding-top: 20px;
 }
 
 h1 {
@@ -20,4 +21,32 @@ a {
 a:hover {
     text-decoration: underline;
     color: #00bfff;
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+.text-muted {
+    color: #b0b0b0 !important;
+}
+
+.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.25rem;
+}
+
+.rounded-circle {
+    border: 2px solid #ffffff;
 }
